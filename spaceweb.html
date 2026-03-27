@@ -8,19 +8,21 @@
         body { margin: 0; overflow: hidden; background-color: #000; color: white; font-family: sans-serif; }
         canvas { display: block; }
         #overlay {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            pointer-events: none;
-            text-shadow: 2px 2px 4px #000;
-        }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    text-shadow: 2px 2px 4px #000;
+}
     </style>
 </head>
 
 <body>
     <div id="overlay">
-        <h1>Space Escape 3D</h1>
-        <p>Scroll or move your mouse to explore the sector.</p>
+       <h1 class="text-4xl font-bold">Space Escape 3D</h1>
+       <p>Scroll or move your mouse to explore the sector.</p>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="main.js"></script>
@@ -260,5 +262,7 @@ animate();
 </script>
 </body>
 </html>
+
+
 
 
