@@ -131,6 +131,133 @@ window.addEventListener('resize', () => {
 
 animate();
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+
+const loader = new THREE.TextureLoader();
+const surfaceTexture = loader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+
+
+const planet = new THREE.Mesh(
+    new THREE.SphereGeometry(2, 32, 32),
+    new THREE.MeshStandardMaterial({ map: surfaceTexture })
+);
+scene.add(planet);
+
+
+const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(3.8, 0.1, 16, 100),
+    new THREE.MeshStandardMaterial({ color: 0xffd700 })
+);
+ring.rotation.x = Math.PI / 2;
+scene.add(ring);
+
+
+const box = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshStandardMaterial({ color: 0xaaaaaa })
+);
+box.position.set(6, 3, -5);
+scene.add(box);
+
+const monolith = new THREE.Mesh(
+    new THREE.TetrahedronGeometry(1.5),
+    new THREE.MeshStandardMaterial({ color: 0x00ffcc, wireframe: true })
+);
+monolith.position.set(-6, -2, -4);
+scene.add(monolith);
+
+const beacon = new THREE.Mesh(
+    new THREE.OctahedronGeometry(1.2),
+    new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0x330000 })
+);
+beacon.position.set(3, -5, -2);
+scene.add(beacon);
+
+const tank = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.6, 0.6, 2, 20),
+    new THREE.MeshStandardMaterial({ color: 0x555555 })
+);
+tank.position.set(-4, 5, -6);
+scene.add(tank);
+
+    
+const sunLight = new THREE.PointLight(0xffffff, 1.2, 100);
+sunLight.position.set(10, 10, 10);
+scene.add(sunLight);
+scene.add(new THREE.AmbientLight(0x404040));
+
+// Stars
+const starGeo = new THREE.BufferGeometry();
+const starCount = 6000;
+const posArray = new Float32Array(starCount * 3);
+
+for (let i = 0; i < starCount * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 100;
+}
+
+starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const starField = new THREE.Points(
+    starGeo,
+    new THREE.PointsMaterial({ size: 0.02 })
+);
+
+scene.add(starField);
+
+camera.position.z = 15;
+
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    planet.rotation.y += 0.003;
+    ring.rotation.z += 0.008;
+    box.rotation.x += 0.01;
+    box.rotation.y += 0.01;
+    monolith.rotation.y += 0.02;
+    beacon.rotation.y += 0.04;
+    tank.rotation.z += 0.01;
+
+    starField.rotation.y += 0.0002;
+
+    controls.update(); 
+
+    renderer.render(scene, camera);
+}
+
+
+window.addEventListener("wheel", (event) => {
+    camera.position.z += event.deltaY * 0.01;
+});
+
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+animate();
+
 </script>
 </body>
 </html>
+
