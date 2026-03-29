@@ -2,10 +2,10 @@ Overview:
 This 3D website is a web-based experience, The users are allowed to explore virtual space environment filled with geometrical structures representing a few planets and a dynamic background. This project focuses on creativity with 3D graphics to create an engaging and attractive experience.
 
 Features:
-Interactive 3D Environment
-Animated Planets 
-Multiple 3D Objects 
-Starfieled Background 
+Interactive 3D Environment, 
+Animated Planets,  
+Multiple 3D Objects,  
+Starfieled Background,  
 Users Control
 
 Purpose:
